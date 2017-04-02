@@ -1,27 +1,38 @@
 <!DOCTYPE index.html>
-// load the SDK
+<! load the SDK>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 <script src="http://www.mapquestapi.com/sdk/js/v7.2.s/mqa.toolkit.js?key=L3wJgE8ADVGtb2QWDJoe48Zi6cZ1Su4y"></script>
 
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=KEY"></script>
+<script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=KEY"></script>
+
+<body>
+  <div id="map"></div>
+</body>
+
 <script type="text/javascript">
+    var map,
+      dir;
 
-  // An example of using the MQA.EventUtil to hook into the window load event and execute the defined
-  // function passed in as the last parameter. You could alternatively create a plain function here and
-  // have it executed whenever you like (e.g. <body onload="yourfunction">).
+    map = L.map('map', {
+      layers: MQ.mapLayer(),
+      center: [ 38.895345, -77.030101 ],
+      zoom: 15
+    });
 
-  MQA.EventUtil.observe(window, 'load', function() {
+    dir = MQ.routing.directions();
 
-    // create an object for options
-    var options = {
-      elt: document.getElementById('map'),       // ID of map element on page
-      zoom: 10,                                  // initial zoom level of the map
-      latLng: { lat: 39.7439, lng: -105.0200 },  // center of map in latitude/longitude
-      mtype: 'map',                              // map type (map, sat, hyb); defaults to map
-      bestFitMargin: 0,                          // margin offset from map viewport when applying a bestfit on shapes
-      zoomOnDoubleClick: true                    // enable map to be zoomed in when double-clicking
-    };
+    dir.route({
+      locations: [
+        '1600 pennsylvania ave, washington dc',
+        '935 pennsylvania ave, washington dc'
+      ]
+    });
 
-    // construct an instance of MQA.TileMap with the options object
-    window.map = new MQA.TileMap(options);
-  });
-
+    map.addLayer(MQ.routing.routeLayer({
+      directions: dir,
+      fitBounds: true
+    }));
 </script>
