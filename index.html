@@ -1,7 +1,7 @@
 <!DOCTYPE index.html>
 <! load the SDK>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+<link rel="stylesheet" type="text/css" href="styles.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 <script src="http://www.mapquestapi.com/sdk/js/v7.2.s/mqa.toolkit.js?key=L3wJgE8ADVGtb2QWDJoe48Zi6cZ1Su4y"></script>
 
@@ -10,29 +10,5 @@
 
 <body>
   <div id="map"></div>
+  <script src="main.js"></script>
 </body>
-
-<script type="text/javascript">
-    var map,
-      dir;
-
-    map = L.map('map', {
-      layers: MQ.mapLayer(),
-      center: [ 38.895345, -77.030101 ],
-      zoom: 15
-    });
-
-    dir = MQ.routing.directions();
-
-    dir.route({
-      locations: [
-        '1600 pennsylvania ave, washington dc',
-        '935 pennsylvania ave, washington dc'
-      ]
-    });
-
-    map.addLayer(MQ.routing.routeLayer({
-      directions: dir,
-      fitBounds: true
-    }));
-</script>
